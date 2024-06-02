@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return to_route('image.create');
+});
+
+Route::controller(ImageController::class)->prefix('image')->group(function() {
+    Route::get('create', 'create')->name('image.create');
+    Route::post('store', 'store')->name('image.store');
+    Route::get('show', 'show')->name('image.show');
+    Route::post('edit', 'edit')->name('image.edit');
 });
