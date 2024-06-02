@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
 use Illuminate\Http\Request;
 use Imagick;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use App\Http\Requests\ImageRequest;
 
 class ImageController extends Controller
 {
@@ -14,11 +16,19 @@ class ImageController extends Controller
         return view('image.create');
     }
 
-    public function store(Request $request)
+    public function store(ImageRequest $request)
     {
 
         $imagick = new Imagick();
         $imagick->readImage($request->file('image_file'));
+        $archive_path = $request->file('image_file')->store('images_show_archive');
+
+        Image::create([
+            'archive_path' => $archive_path,
+            // 'user_id'      => auth()?->id(),
+            'ip'           => get_request_ip(),
+            'user_agent'   => $request->header('User-Agent'),
+        ]);
 
         $exif_date = $imagick->getImageProperties("exif:*");
         $data = [
@@ -42,12 +52,25 @@ class ImageController extends Controller
 
     public function show(Request $request)
     {
-        
+        return view('image.show');
     }
 
-    public function edit(Request $request)
+    public function edit(ImageRequest $request)
     {
+        $imagick = new Imagick();
+        $imagick->readImage($request->file('image_file'));
+        $archive_path = $request->file('image_file')->store('images_archive');
+        $imagick->stripImage();
 
+
+        Image::create([
+            'archive_path' => $archive_path,
+            // 'user_id'      => auth()?->id(),
+            'ip'           => get_request_ip(),
+            'user_agent'   => $request->header('User-Agent'),
+        ]);
+        
+        return response()->json(['image' => base64_encode($imagick->getImageBlob())]);
     }
 
     private function convertGpsToDecimal($data)
