@@ -309,7 +309,7 @@ return [
         ],
         [
             'text' => 'クリア',
-            'url'  => 'image/'
+            'url'  => 'image/show'
         ]
     ],
 

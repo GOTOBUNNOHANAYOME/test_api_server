@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->string('archive');
-            $table->string('remake_image');
+            // $table->foreignId('user_id')->constrained();
+            $table->string('archive_path');
+            $table->string('ip');
+            $table->string('user_agent');
             $table->timestamps();
         });
     }
