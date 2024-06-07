@@ -7,6 +7,11 @@ use GuzzleHttp\Client;
 
 class FinanceController extends Controller
 {
+    public function createConfig()
+    {
+        
+    }
+
     public function createIdToken(Request $request)
     {
         return view('finance.create_id_token');
