@@ -31,4 +31,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'jquants' => [
+        'refresh_key' => env('JQUANTS_REFRESH_KEY')
+    ],
+
 ];

@@ -309,7 +309,14 @@ return [
         ],
         [
             'text' => 'クリア',
-            'url'  => 'image/show'
+            'url'  => '/image/show'
+        ],
+        [
+            'header' => '財務'
+        ],
+        [
+            'text'  => 'IDトークン取得',
+            'url'   => 'finance/create/id-token'
         ]
     ],
 
