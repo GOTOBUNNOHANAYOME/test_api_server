@@ -29,5 +29,6 @@ Route::controller(ImageController::class)->prefix('image')->group(function() {
 });
 
 Route::controller(FinanceController::class)->prefix('finance')->group(function() {
+    Route::get('/create/id-token', 'createIdToken')->name('finance.create_id_token');
     Route::get('/get-id-token', 'getIdToken')->name('finance.get_id_token');
 });

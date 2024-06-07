@@ -316,7 +316,7 @@ return [
         ],
         [
             'text'  => 'IDトークン取得',
-            'url'   => 'finance/get-id-token'
+            'url'   => 'finance/create/id-token'
         ]
     ],
 
