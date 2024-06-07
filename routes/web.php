@@ -1,6 +1,9 @@
 <?php
 
-use App\Http\Controllers\ImageController;
+use App\Http\Controllers\{
+    FinanceController,
+    ImageController,
+};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,8 +22,12 @@ Route::get('/', function () {
 });
 
 Route::controller(ImageController::class)->prefix('image')->group(function() {
-    Route::get('create', 'create')->name('image.create');
+    Route::get('/create', 'create')->name('image.create');
     Route::post('store', 'store')->name('image.store');
     Route::get('show', 'show')->name('image.show');
     Route::post('edit', 'edit')->name('image.edit');
+});
+
+Route::controller(FinanceController::class)->prefix('finance')->group(function() {
+    Route::get('/get-id-token', 'getIdToken')->name('finance.get_id_token');
 });
