@@ -10,15 +10,15 @@ class QuantsMethod extends Model
     use HasFactory;
 
     protected $fillable = [
-        'finance_user_id',
+        'user_id',
         'status',
-        'refresh_token',
-        'refresh_token_expired_at',
+        'email',
+        'password',
         'id_token',
     ];
 
-    public function financeUser()
+    public function user()
     {
-        return $this->belongsTo(FinanceUser::class);
+        return $this->belongsTo(User::class);
     }
 }

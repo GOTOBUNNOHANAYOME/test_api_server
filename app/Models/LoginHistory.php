@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FinanceUser extends Model
+class LoginHistory extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'email',
-        'password'
+        'user_id',
+        'user_agent',
+        'ip'
     ];
 }

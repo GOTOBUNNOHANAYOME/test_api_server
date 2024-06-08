@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('finance_users', function (Blueprint $table) {
+        Schema::create('quants_methods', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
+            $table->foreignId('user_id')->constrained();
+            $table->integer('status');
+            $table->string('email');
             $table->string('password');
+            $table->text('id_token')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('finance_users');
+        Schema::dropIfExists('quants_methods');
     }
 };

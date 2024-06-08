@@ -315,9 +315,9 @@ return [
             'header' => '財務'
         ],
         [
-            'text'  => 'IDトークン取得',
-            'url'   => 'finance/create/id-token'
-        ]
+            'text'  => 'API設定',
+            'url'   => 'finance/config/create/'
+        ],
     ],
 
     /*

@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('quants_methods', function (Blueprint $table) {
+        Schema::create('login_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('finance_user_id')->constrained();
-            $table->integer('status');
-            $table->string('refresh_token')->nullable();
-            $table->timestamp('refresh_token_expired_at')->nullable();
-            $table->string('id_token')->nullable();
+            $table->foreignId('user_id')->constrained();
+            $table->string('user_agent');
+            $table->string('ip');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('quants_methods');
+        Schema::dropIfExists('login_histories');
     }
 };
