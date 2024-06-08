@@ -4,7 +4,7 @@ namespace App\Enums;
 
 use BenSampo\Enum\Enum;
 
-final class FinanceUserStatus extends Enum
+final class QuantsMethodStatus extends Enum
 {
     const FILED = 0;
     const COMPLETED = 1;

@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('quants_methods', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('account_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->integer('status');
-            $table->string('refresh_token')->nullable();
-            $table->timestamp('refresh_token_expired_at')->nullable();
-            $table->string('id_token')->nullable();
+            $table->string('email');
+            $table->string('password');
+            $table->text('id_token')->nullable();
             $table->timestamps();
         });
     }

@@ -3,7 +3,9 @@
 use App\Http\Controllers\{
     FinanceController,
     ImageController,
+    LoginHistoryController,
 };
+use App\Models\LoginHistory;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +23,11 @@ Route::get('/', function () {
     return to_route('image.create');
 });
 
+Route::controller(LoginHistoryController::class)->prefix('login')->group(function() {
+    Route::get('/create', 'create')->name('login_history.create');
+    Route::post('/', 'store')->name('login_history.store');
+});
+
 Route::controller(ImageController::class)->prefix('image')->group(function() {
     Route::get('/create', 'create')->name('image.create');
     Route::post('store', 'store')->name('image.store');
@@ -29,8 +36,6 @@ Route::controller(ImageController::class)->prefix('image')->group(function() {
 });
 
 Route::controller(FinanceController::class)->prefix('finance')->group(function() {
-    Route::get('/create/refresh-token', 'createRefreshToken')->name('finance.create_refresh_token');
-    Route::get('/get-refresh-token', 'getRefreshToken')->name('finance.get_refresh_token');
-    Route::get('/create/id-token', 'createIdToken')->name('finance.create_id_token');
-    Route::get('/get-id-token', 'getIdToken')->name('finance.get_id_token');
+    Route::get('config/create', 'createConfig')->name('finance.create_config');
+    Route::get('config/store', 'storeConfig')->name('finance.store_config');
 });

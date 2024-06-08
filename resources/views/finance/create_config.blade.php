@@ -12,17 +12,17 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        @if(!is_null($finance_user))
+                        @if(!is_null($quants_method))
                         <span class="small text-danger">すでに登録済みです。</span>
                         @endif
-                        <form action="{{ route('finance.get_refresh_token') }}">
+                        <form action="{{ route('finance.store_config') }}">
                             <div class="form-group">
                                 <label for="" class="form-label small">Email</label>
-                                <input type="text" class="form-control" value="{{ !is_null($finance_user) ? $finance_user->email : '' }}">
+                                <input type="text" name="email" class="form-control" value="{{ !is_null($quants_method) ? $quants_method->email : '' }}">
                             </div>
                             <div class="form-group">
                                 <label for="" class="form-label small">パスワード</label>
-                                <input type="text" class="form-control">
+                                <input type="text" name="password" class="form-control">
                             </div>
                             <div class="from-group">
                                 <input type="submit" class="float-right btn btn-sm btn-primary" value="リフレッシュトークン取得">

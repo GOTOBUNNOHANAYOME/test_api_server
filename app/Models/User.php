@@ -42,8 +42,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function financeUsers()
+    public function quantsMethods()
     {
-        return $this->HasMany(FinanceUser::class);
+        return $this->hasMany(QuantsMethod::class);
     }
 }
