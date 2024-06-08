@@ -13,19 +13,19 @@ use GuzzleHttp\Client;
 
 class FinanceController extends Controller
 {
-    public function createConfig(Request $request)
+    public function createRefreshToken(Request $request)
     {
         $finance_user = auth()->user()
-            ->financeUsers()
+            ?->financeUsers()
             ?->where('status', FinanceUserStatus::COMPLETED)
-            ->first();
+            ?->first();
         
-        return view('finance.set_config', [
+        return view('finance.create_refresh_token', [
             'finance_user' => $finance_user
         ]);
     }
 
-    public function storeConfig(Request $request)
+    public function get_refresh_token(Request $request)
     {
         $client = new Client();
         $params = [

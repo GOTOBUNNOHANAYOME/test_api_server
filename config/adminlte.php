@@ -315,9 +315,13 @@ return [
             'header' => '財務'
         ],
         [
-            'text'  => 'IDトークン取得',
+            'text'  => 'リフレッシュトークン',
+            'url'   => 'finance/create/refresh-token'
+        ],
+        [
+            'text'  => 'IDトークン',
             'url'   => 'finance/create/id-token'
-        ]
+        ],
     ],
 
     /*
