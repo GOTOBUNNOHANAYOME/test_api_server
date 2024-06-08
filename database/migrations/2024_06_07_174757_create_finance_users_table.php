@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('finance_users', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained();
             $table->string('email')->unique();
             $table->string('password');
             $table->timestamps();

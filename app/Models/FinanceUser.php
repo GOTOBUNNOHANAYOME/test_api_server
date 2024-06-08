@@ -10,7 +10,13 @@ class FinanceUser extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'email',
         'password'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
