@@ -9,16 +9,13 @@
 @section('content')
     <div class="col-12">
         <div class="row">
-            <div class="col-md-6">
+            <div class="{{ is_null($quants_method) ? 'col-md-6' : 'col-md-10' }}">
                 <div class="card">
                     <div class="card-body">
-                        @if(!is_null($quants_method))
-                        <span class="small text-danger">すでに登録済みです。</span>
-                        @endif
                         <form action="{{ route('finance.store_config') }}">
                             <div class="form-group">
                                 <label for="" class="form-label small">Email</label>
-                                <input type="text" name="email" class="form-control" value="{{ !is_null($quants_method) ? $quants_method->email : '' }}">
+                                <input type="text" name="email" class="form-control" value="">
                             </div>
                             <div class="form-group">
                                 <label for="" class="form-label small">パスワード</label>
@@ -30,6 +27,24 @@
                         </form>
                     </div>
                 </div>
+                @if(!is_null($quants_method))
+                <div class="card">
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-md-2 small font-weight-bold">Email</dt>
+                            <dd class="col-md-4 small">{{ $quants_method->email }}</dd>
+                            <dt class="col-md-2 small font-weight-bold">パスワード</dt>
+                            <dd class="col-md-4 small">{{ Str::limit($quants_method->password, 3, '***') }}</dd>
+                            <dt class="col-md-2 small font-weight-bold">IDトークン</dt>
+                            <dd class="col-md-4 small">{{ Str::limit($quants_method->id_token, 10, '***')}}</dd>
+                            <dt class="col-md-2 small font-weight-bold">ステータス</dt>
+                            <dd class="col-md-4 small">{{ \App\Enums\QuantsMethodStatus::getDescription($quants_method->status) }}</dd>
+                            <dt class="col-md-2 small font-weight-bold">更新日時</dt>
+                            <dd class="col-md-4 small">{{ $quants_method->updated_at }}</dd>
+                        </dl>
+                    </div>
+                </div>
+                @endif
             </div>
         </div>
     </div>
