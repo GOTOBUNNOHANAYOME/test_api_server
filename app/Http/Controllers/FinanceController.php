@@ -54,16 +54,23 @@ class FinanceController extends Controller
         }
 
         $response_params = json_decode($response->getBody()->getContents());
-        
-        $quants_method =  QuantsMethod::create([
-            'user_id'                  => auth()->id(),
-            'email'                    => $request->email,
-            'password'                 => $request->password,
-            'id_token'                 => $response_params->idToken,
-            'status'                   => QuantsMethodStatus::COMPLETED
-        ]);
 
+        if(!auth()->user()->quantsMethods()->get()->isEmpty()){
+            auth()->user()->quantsMethods()->update([
+                'id_token'  => $response_params->idToken,
+            ]);
+        }else{
+            QuantsMethod::create([
+                'user_id'   => auth()->id(),
+                'email'     => $request->email,
+                'password'  => $request->password,
+                'id_token'  => $response_params->idToken,
+                'status'    => QuantsMethodStatus::COMPLETED
+            ]);
+        }
 
         return to_route('finance.create_config');
     }
+
+
 }

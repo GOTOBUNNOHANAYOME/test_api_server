@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\{
+    CompanyController,
     FinanceController,
     ImageController,
     LoginHistoryController,
 };
+use App\Models\Company;
 use App\Models\LoginHistory;
 use Illuminate\Support\Facades\Route;
 
@@ -38,4 +40,10 @@ Route::controller(ImageController::class)->prefix('image')->group(function() {
 Route::controller(FinanceController::class)->prefix('finance')->group(function() {
     Route::get('config/create', 'createConfig')->name('finance.create_config');
     Route::get('config/store', 'storeConfig')->name('finance.store_config');
+});
+
+Route::controller(CompanyController::class)->prefix('company')->group(function() {
+    Route::get('/create', 'create')->name('company.create');
+    Route::post('/', 'store')->name('company.store');
+    Route::get('/', 'index')->name('company.index');
 });

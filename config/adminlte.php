@@ -318,6 +318,14 @@ return [
             'text'  => 'API設定',
             'url'   => 'finance/config/create/'
         ],
+        [
+            'text'  => '上場銘柄取得',
+            'url'   => 'company/create'
+        ],
+        [
+            'text'  => '上場企業一覧',
+            'url'   => 'company'
+        ]
     ],
 
     /*
