@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\{
     CompanyController,
+    DocumentController,
     FinanceController,
     ImageController,
     LoginHistoryController,
@@ -46,4 +47,9 @@ Route::controller(CompanyController::class)->prefix('company')->group(function()
     Route::get('/create', 'create')->name('company.create');
     Route::post('/', 'store')->name('company.store');
     Route::get('/', 'index')->name('company.index');
+});
+
+Route::controller(DocumentController::class)->prefix('document')->group(function() {
+    Route::get('/create', 'create')->name('document.create');
+    Route::post('/', 'store')->name('document.store');
 });

@@ -10,10 +10,11 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <form>
+                <form method="POST" action="{{ route('document.store') }}">
+                    @csrf
                     <div class="row">
                         <div class="col-md-12">
-                            <input type="text" class="form-control">
+                            <input type="text" name="code" class="form-control">
                             <button type="submit" class="btn btn-sm btn-primary">取得</button>
                         </div>
                     </div>
