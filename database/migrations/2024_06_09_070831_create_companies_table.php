@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
+            $table->string('code')->index();
             $table->string('name');
             $table->string('english_name');
             $table->string('sector_17_code');
