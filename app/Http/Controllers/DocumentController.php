@@ -63,6 +63,7 @@ class DocumentController extends Controller
                     ]);
 
                     $response_params = json_decode($response->getBody()->getContents());
+                    $now = now();
                     foreach($response_params->statements as $response_param){
                         $this->last_document_id = $this->last_document_id + 1;
 
@@ -71,30 +72,38 @@ class DocumentController extends Controller
                             'company_id'    => $company->id,
                             'type'          => $response_param->TypeOfCurrentPeriod,
                             'start_date'    => $response_param->CurrentPeriodStartDate,
-                            'end_date'      => $response_param->CurrentPeriodEndDate
+                            'end_date'      => $response_param->CurrentPeriodEndDate,
+                            'created_at'    => $now,
+                            'updated_at'    => $now
                         ];
 
                         $balance_sheet_params[] = [
                             'document_id' => $this->last_document_id,
-                            'assets'      => $response_param->TotalAssets,
-                            'equity'      => $response_param->Equity,
-                            'liabilities' => (int)$response_param->TotalAssets - (int)$response_param->Equity
+                            'assets'      => (int)$response_param->TotalAssets,
+                            'equity'      => (int)$response_param->Equity,
+                            'liabilities' => (int)$response_param->TotalAssets - (int)$response_param->Equity,
+                            'created_at'  => $now,
+                            'updated_at'  => $now
                         ];
                         
                         $profit_and_loss_statement_params[] = [
                             'document_id'       => $this->last_document_id,
-                            'net_sales'         => $response_param->NetSales,
-                            'operating_profit' => $response_param->OperatingProfit,
-                            'ordinary_profit'   => $response_param->OrdinaryProfit,
-                            'profit'            => $response_param->Profit
+                            'net_sales'         => (int)$response_param->NetSales,
+                            'operating_profit'  => (int)$response_param->OperatingProfit,
+                            'ordinary_profit'   => (int)$response_param->OrdinaryProfit,
+                            'profit'            => (int)$response_param->Profit,
+                            'created_at'        => $now,
+                            'updated_at'        => $now
                         ];
 
                         $cash_flow_statement_params[] = [
                             'document_id' => $this->last_document_id,
-                            'operating'   => $response_param->CashFlowsFromOperatingActivities,
-                            'investing'   => $response_param->CashFlowsFromInvestingActivities,
-                            'financing'   => $response_param->CashFlowsFromFinancingActivities,
-                            'cash'        => $response_param->CashAndEquivalents
+                            'operating'   => (int)$response_param->CashFlowsFromOperatingActivities,
+                            'investing'   => (int)$response_param->CashFlowsFromInvestingActivities,
+                            'financing'   => (int)$response_param->CashFlowsFromFinancingActivities,
+                            'cash'        => (int)$response_param->CashAndEquivalents,
+                            'created_at'  => $now,
+                            'updated_at'  => $now
                         ];
                     }
                 }
@@ -109,6 +118,7 @@ class DocumentController extends Controller
             }catch(\Exception $e){
                 DB::rollBack();
             }
+
             return to_route('document.create');
         }
 
