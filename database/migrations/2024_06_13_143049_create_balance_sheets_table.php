@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('balance_sheets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('document_id')->constrained();
-            $table->integer('assets')->comment('TotalAssets');
-            $table->integer('equity')->comment('Equity');
-            $table->integer('liabilities');
+            $table->bigInteger('assets')->index()->comment('TotalAssets');
+            $table->bigInteger('equity')->index()->comment('Equity');
+            $table->bigInteger('liabilities')->index();
             $table->timestamps();
         });
     }

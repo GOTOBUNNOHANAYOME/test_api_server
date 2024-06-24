@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('profit_and_loss_statements', function (Blueprint $table) {
             $table->id();
             $table->foreignId('document_id')->constrained();
-            $table->integer('net_sales')->comment('NetSales');
-            $table->integer('operating_profit')->comment('OperatingProfit');
-            $table->integer('ordinary_profit')->comment('OrdinaryProfit');
-            $table->integer('profit')->comment('Profit');
+            $table->bigInteger('net_sales')->index()->comment('NetSales');
+            $table->bigInteger('operating_profit')->index()->comment('OperatingProfit');
+            $table->bigInteger('ordinary_profit')->index()->comment('OrdinaryProfit');
+            $table->bigInteger('profit')->index()->comment('Profit');
             $table->timestamps();
         });
     }
