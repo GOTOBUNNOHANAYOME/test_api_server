@@ -325,6 +325,10 @@ return [
         [
             'text'  => '上場企業一覧',
             'url'   => 'company'
+        ],
+        [
+            'text'  => '財務諸表取得',
+            'url'   => 'document/create'
         ]
     ],
 
