@@ -7,8 +7,6 @@ use App\Http\Controllers\{
     ImageController,
     LoginHistoryController,
 };
-use App\Models\Company;
-use App\Models\LoginHistory;
 use Illuminate\Support\Facades\Route;
 
 /*

@@ -12,9 +12,15 @@ use App\Models\{
 };
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\DB;
 
 class DocumentController extends Controller
 {
+    protected $last_document_id;
+
+    public function __construct() {
+        $this->last_document_id = (int)Document::orderBy('id', 'DESC')?->first()?->id ?? 0;
+    }
     public function create(Request $request)
     {
         return view('document.create');
@@ -37,17 +43,14 @@ class DocumentController extends Controller
         $cash_flow_statement_params = [];
         $profit_and_loss_statement_params = [];
         $document_params = [];
-        $last_document_id = (int)Document::orderBy('id', 'DESC')?->first()?->id ?? 0;
-
 
         Company::query()
             ->when(!is_null($request->code), function($query) use ($request) {
                 return $query->where('code', $request->code)
                     ->orWhere('name', 'LIKE', '%'.$request->code.'%');
             })
-            ->chunk(1000, function($companies) use ($client, $headers, &$balance_sheet_params,
-            &$cash_flow_statement_params, &$profit_and_loss_statement_params, &$document_params,
-            &$last_document_id) {
+            ->chunk(50, function($companies) use ($client, $headers, &$balance_sheet_params,
+            &$cash_flow_statement_params, &$profit_and_loss_statement_params, &$document_params) {
                 foreach($companies as $company){
                     if(is_null($company->code)){
                         continue;
@@ -61,33 +64,33 @@ class DocumentController extends Controller
 
                     $response_params = json_decode($response->getBody()->getContents());
                     foreach($response_params->statements as $response_param){
-                        $last_document_id = $last_document_id ++;
+                        $this->last_document_id = $this->last_document_id + 1;
 
-                        $document_params = [
-                            'id'            => $last_document_id,
+                        $document_params[] = [
+                            'id'            => $this->last_document_id,
                             'company_id'    => $company->id,
                             'type'          => $response_param->TypeOfCurrentPeriod,
                             'start_date'    => $response_param->CurrentPeriodStartDate,
                             'end_date'      => $response_param->CurrentPeriodEndDate
                         ];
 
-                        $balance_sheet_params = [
-                            'document_id' => $last_document_id,
+                        $balance_sheet_params[] = [
+                            'document_id' => $this->last_document_id,
                             'assets'      => $response_param->TotalAssets,
                             'equity'      => $response_param->Equity,
                             'liabilities' => (int)$response_param->TotalAssets - (int)$response_param->Equity
                         ];
                         
-                        $profit_and_loss_statement_params = [
-                            'document_id'       => $last_document_id,
+                        $profit_and_loss_statement_params[] = [
+                            'document_id'       => $this->last_document_id,
                             'net_sales'         => $response_param->NetSales,
-                            'operationg_profit' => $response_param->OperatingProfit,
+                            'operating_profit' => $response_param->OperatingProfit,
                             'ordinary_profit'   => $response_param->OrdinaryProfit,
                             'profit'            => $response_param->Profit
                         ];
 
-                        $cash_flow_statement_params = [
-                            'document_id' => $last_document_id,
+                        $cash_flow_statement_params[] = [
+                            'document_id' => $this->last_document_id,
                             'operating'   => $response_param->CashFlowsFromOperatingActivities,
                             'investing'   => $response_param->CashFlowsFromInvestingActivities,
                             'financing'   => $response_param->CashFlowsFromFinancingActivities,
@@ -96,12 +99,16 @@ class DocumentController extends Controller
                     }
                 }
             });
-
-            Document::insert($document_params);
-            BalanceSheet::insert($balance_sheet_params);
-            ProfitAndLossStatement::insert($profit_and_loss_statement_params);
-            CashFlowStatement::insert($cash_flow_statement_params);
-
+            try{
+                DB::beginTransaction();
+                Document::insert($document_params);
+                BalanceSheet::insert($balance_sheet_params);
+                ProfitAndLossStatement::insert($profit_and_loss_statement_params);
+                CashFlowStatement::insert($cash_flow_statement_params);
+                DB::commit();
+            }catch(\Exception $e){
+                DB::rollBack();
+            }
             return to_route('document.create');
         }
 

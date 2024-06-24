@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('cash_flow_statements', function (Blueprint $table) {
             $table->id();
             $table->foreignId('document_id')->constrained();
-            $table->integer('operating')->comment('CashFlowsFromOperatingActivities');
-            $table->integer('investing')->comment('CashFlowsFromInvestingActivities');
-            $table->integer('financing')->comment('CashFlowsFromFinancingActivities');
-            $table->integer('cash')->comment('CashAndEquivalents');
+            $table->bigInteger('operating')->index()->comment('CashFlowsFromOperatingActivities');
+            $table->bigInteger('investing')->index()->comment('CashFlowsFromInvestingActivities');
+            $table->bigInteger('financing')->index()->comment('CashFlowsFromFinancingActivities');
+            $table->bigInteger('cash')->index()->comment('CashAndEquivalents');
             $table->timestamps();
         });
     }
