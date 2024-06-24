@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('documenets', function (Blueprint $table) {
+        Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')->constrained();
             $table->string('type')->comment('TypeOfCurrentPeriod');
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('documenets');
+        Schema::dropIfExists('documents');
     }
 };

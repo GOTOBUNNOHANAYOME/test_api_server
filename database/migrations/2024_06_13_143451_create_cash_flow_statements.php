@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('cash_flow_statements', function (Blueprint $table) {
             $table->id();
             $table->foreignId('document_id')->constrained();
-            $table->integer('operationg')->comment('CashFlowsFromOperatingActivities');
+            $table->integer('operating')->comment('CashFlowsFromOperatingActivities');
             $table->integer('investing')->comment('CashFlowsFromInvestingActivities');
             $table->integer('financing')->comment('CashFlowsFromFinancingActivities');
             $table->integer('cash')->comment('CashAndEquivalents');

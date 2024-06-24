@@ -14,8 +14,9 @@
                     @csrf
                     <div class="row">
                         <div class="col-md-12">
+                            <label for="" class="small">ティッカーコード or 企業</label>
                             <input type="text" name="code" class="form-control">
-                            <button type="submit" class="btn btn-sm btn-primary">取得</button>
+                            <button type="submit" class="btn btn-sm btn-primary float-right mt-3">取得</button>
                         </div>
                     </div>
                 </form>
