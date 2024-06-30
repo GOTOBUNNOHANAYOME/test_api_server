@@ -16,7 +16,7 @@ class CompanyController extends Controller
                 return $query->where('code', $request->code);
             })
             ->when(!is_null($request->name), function($query) use ($request) {
-                return $query->where('name', $request->name);
+                return $query->where('name', 'LIKE', '%' . $request->name . '%');
             })
             ->when(!is_null($request->sector_17_code), function($query) use ($request) {
                 return $query->where('sector_17_code', $request->sector_17_code);
