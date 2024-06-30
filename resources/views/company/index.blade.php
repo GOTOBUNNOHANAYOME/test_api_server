@@ -9,6 +9,60 @@
 @section('content')
 <div class="col-md-12">
     <div class="card">
+        <div class="card-header">
+            検索フォーム
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-xs fa-fw fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="code" class="small">ティッカーコード</label>
+                        <input type="text" name="code" class=" form-control">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="name" class="small">企業名</label>
+                        <input type="text" name="name" class=" form-control">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="sector17" class="small">17業種</label>
+                        <select name="sector_17_code" id="" class="select2_form form-control">
+                            <option value="" hidden selected></option>
+                            @foreach (\App\Enums\Sector17::asSelectArray() as $index => $value)
+                                <option value="{{ $index }}">{{ $value }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="sector33" class="small">33業種</label>
+                        <select name="sector_33_code" id="" class="select2_form form-control">
+                            <option value="" hidden selected></option>
+                            @foreach (\App\Enums\Sector33::asSelectArray() as $index => $value)
+                                <option value="{{ $index }}">{{ $value }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="market" class="small">マーケット</label>
+                        <select name="market_code" id="" class="select2_form form-control">
+                            <option value="" hidden selected></option>
+                            @foreach (\App\Enums\Market::asSelectArray() as $index => $value)
+                                <option value="{{ $index }}">{{ $value }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card">
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-sm">
@@ -46,3 +100,14 @@
     </div>
 </div>
 @endsection
+
+@push('js')
+<script>
+    $(document).ready(function() {
+        $('.select2_form').select2({
+            theme: 'bootstrap4',
+            width: 'style'
+        });
+    });
+</script>
+@endpush
