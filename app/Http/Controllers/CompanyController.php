@@ -34,13 +34,14 @@ class CompanyController extends Controller
         $response = $client->request('GET', config('jquants.listed_info'),[
             'headers' => $headers
         ]);
-        $companies = collect(json_decode($response->getBody()->getContents())->info);
 
+        $companies = collect(json_decode($response->getBody()->getContents())->info);
         $company_params = [];
         $companies->chunk(500)->each(function($chunk) use ($company_params) {
             foreach($chunk as $company){
                 $company_params[] = [
-                    'code'           => $company->Code,
+                    'code'           => strlen($company->Code) === 5 && $company->Code[-1] === '0' ?
+                                        substr($company->Code, 0, 4) : $company->Code,
                     'name'           => $company->CompanyName,
                     'english_name'   => $company->CompanyNameEnglish,
                     'sector_17_code' => $company->Sector17Code,
