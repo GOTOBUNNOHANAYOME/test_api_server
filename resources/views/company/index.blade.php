@@ -32,10 +32,10 @@
                             <td class="small align-middle">{{ $campany->code }}</td>
                             <td class="small align-middle">{{ $campany->name }}</td>
                             <td class="small align-middle">{{ $campany->english_name }}</td>
-                            <td class="small align-middle">{{ $campany->sector_17_code }}</td>
-                            <td class="small align-middle">{{ $campany->sector_33_code }}</td>
+                            <td class="small align-middle">{{ \App\Enums\Sector17::getDescription((string)$campany->sector_17_code) }}</td>
+                            <td class="small align-middle">{{ \App\Enums\Sector33::getDescription((string)$campany->sector_33_code) }}</td>
                             <td class="small align-middle">{{ $campany->scale_category }}</td>
-                            <td class="small align-middle">{{ $campany->market_code }}</td>
+                            <td class="small align-middle">{{ \App\Enums\Market::getDescription($campany->market_code) }}</td>
                             <td class="small align-middle">{{ $campany->listed_at }}</td>
                         </tr>
                         @endforeach
