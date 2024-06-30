@@ -11,8 +11,26 @@ class CompanyController extends Controller
 {
     public function index(Request $request)
     {   
+        $comanies = Company::query()
+            ->when(!is_null($request->code), function($query) use ($request) {
+                return $query->where('code', $request->code);
+            })
+            ->when(!is_null($request->name), function($query) use ($request) {
+                return $query->where('name', 'LIKE', '%' . $request->name . '%');
+            })
+            ->when(!is_null($request->sector_17_code), function($query) use ($request) {
+                return $query->where('sector_17_code', $request->sector_17_code);
+            })
+            ->when(!is_null($request->sector_33_code), function($query) use ($request) {
+                return $query->where('sector_33_code', $request->sector_33_code);
+            })
+            ->when(!is_null($request->market_code), function($query) use ($request) {
+                return $query->where('market_code', $request->market_code);
+            })
+            ->paginate(50);
+
         return view('company.index', [
-            'companies' => Company::get()
+            'companies' => $comanies
         ]);
     }
     public function create(Request $request)
